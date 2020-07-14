@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<AutomobileEnterprise.Models.Works.Work>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Works";
+}
+
+<h2>Works</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Car)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ServiceWorker)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Cost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceWorker.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.WorkId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.WorkId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.WorkId })
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, PageNum =>Url.Action("Index",
+    new { PageNum }))

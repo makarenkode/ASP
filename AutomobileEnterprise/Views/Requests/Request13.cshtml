@@ -1,0 +1,57 @@
+﻿@model AutomobileEnterprise.Controllers.RequestsController.Req13vm
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Request 13";
+}
+
+<h4 style="color:black">Get the list of subordinates of the specified head</h4>
+
+
+<form method="get">
+    <div class="form-inline">
+        @Html.Label("Head:", new { @class = "control-label col-md-2" })
+        <div style="position:fixed; left:20% " ;class="col-md-10">
+            @Html.DropDownListFor(model => model.HeadId, Model.heads as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Show" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.masters.First().FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.masters.First().SecondName)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.masters)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondName)
+            </td>
+        </tr>
+    }
+</table>
+
+Page @(Model.masters.PageCount < Model.masters.PageNumber ? 0 : Model.masters.PageNumber) of @Model.masters.PageCount
+@Html.PagedListPager(Model.masters, PageNum =>Url.Action("Request13",
+    new
+    {
+        headId = Model.HeadId,
+        pageNum = PageNum,
+    }))
+
+

@@ -1,0 +1,57 @@
+﻿@model AutomobileEnterprise.Controllers.RequestsController.Req14vm
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Request 14";
+}
+
+<h4 style="color:black">Get data about works</h4>
+
+
+<form method="get">
+    <div class="form-inline">
+        @Html.Label("Worker:", new { @class = "control-label col-md-2" })
+        <div style="position:fixed; left:20% " ;class="col-md-10">
+            @Html.DropDownListFor(model => model.WorkerId, Model.Workers as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Show" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.works.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.works.First().Cost)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.works)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+        </tr>
+    }
+</table>
+
+Page @(Model.works.PageCount < Model.works.PageNumber ? 0 : Model.works.PageNumber) of @Model.works.PageCount
+@Html.PagedListPager(Model.works, PageNum =>Url.Action("Request14",
+    new
+    {
+        workerId = Model.WorkerId,
+        pageNum = PageNum,
+    }))
+
+

@@ -1,0 +1,55 @@
+﻿@model AutomobileEnterprise.Controllers.RequestsController.Req4vm
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Request 4";
+}
+
+<h4 style="color:black">Get list of drivers</h4>
+
+
+<form method="get">
+    <div class="form-inline">
+        @Html.Label("Route:", new { @class = "control-label col-md-2" })
+        <div style="position:fixed; left:20% " ;class="col-md-10">
+            @Html.DropDownListFor(model => model.RouteId, Model.Routes as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Show" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Buses.First().Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Buses.First().Seats)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Buses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seats)
+            </td>
+        </tr>
+    }
+</table>
+
+Page @(Model.Buses.PageCount < Model.Buses.PageNumber ? 0 : Model.Buses.PageNumber) of @Model.Buses.PageCount
+@Html.PagedListPager(Model.Buses, PageNum =>Url.Action("Request4",
+    new
+    {
+        routeId = Model.RouteId,
+        pageNum = PageNum,
+    }))

@@ -1,0 +1,84 @@
+﻿@using System.Collections
+@using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities
+@using PagedList.Mvc
+@model AutomobileEnterprise.Models.ManualRequest
+
+@{
+    ViewBag.Title = "Request";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 >Write your requst</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+
+            @*@Html.LabelFor(model => model.Query, "Input", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Query, 10, 100, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.Query, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Run" class="btn btn-default" style="position:fixed;left:42%;color:red"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-md-10">
+    @Html.Label("Output:")
+    @if (!Model.ErrorMessage.IsNullOrWhiteSpace())
+    {
+        @Html.DisplayFor(Model => Model.ErrorMessage)
+    }
+    else if ((@Model.ColumnNames == null || !@Model.ColumnNames.Any()) && !Model.Query.IsNullOrWhiteSpace())
+    {
+        @Html.DisplayName("Rows affected:")
+        @Html.DisplayFor(Model => Model.RecordsAffected)
+    }
+</div>
+
+@if (@Model.ColumnNames != null && @Model.ColumnNames.Any())
+{
+    <table class="table">
+        <tr>
+            @foreach (var header in @Model.ColumnNames)
+            {
+                <th>
+                    @header
+                </th>
+            }
+        </tr>
+        @if (@Model.SelectResult != null && @Model.SelectResult.Any())
+        {
+            foreach (var row in @Model.SelectResult)
+            {
+                <tr>
+                    @foreach (var value in row.Values)
+                    {
+                        <td>@value</td>
+                    }
+                </tr>
+            }
+        }
+    </table>
+
+    <div class="col-md-10">
+        Page @(Model.SelectResult.PageCount < Model.SelectResult.PageNumber ? 0 : Model.SelectResult.PageNumber) of @Model.SelectResult.PageCount
+        @Html.PagedListPager(Model.SelectResult, PageNum => Url.Action("Index",
+            new
+            {
+                pageNum = PageNum,
+                query = Model.Query,
+            }));
+    </div>
+}

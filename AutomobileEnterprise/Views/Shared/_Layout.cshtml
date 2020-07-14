@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Automobile Enterprise", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole("Admin") || User.IsInRole("Master"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Automobile Enterprice
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Brigades", "Index", "Brigades")</li>
+                                <li>@Html.ActionLink("Works", "Index", "Works")</li>
+                                <li>@Html.ActionLink("Garages", "Index", "Garages")</li>
+                                <li>@Html.ActionLink("Workshops", "Index", "Workshops")</li>
+                                <li>@Html.ActionLink("Routes", "Index", "Routes")</li>
+                                <li>@Html.ActionLink("Departures", "Index", "Departures")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Cars
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Buses", "Index", "Buses")</li>
+                                <li>@Html.ActionLink("Route Taxis", "Index", "RouteTaxis")</li>
+                                <li>@Html.ActionLink("Taxis", "Index", "Taxis")</li>
+                                <li>@Html.ActionLink("FireEngines", "Index", "FireEngines")</li>
+                                <li>@Html.ActionLink("Tractors", "Index", "Tractors")</li>
+                                <li>@Html.ActionLink("Trucks", "Index", "Trucks")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("HR"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Staff
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Bosses", "Index", "Bosses")</li>
+                                <li>@Html.ActionLink("Brigadiers", "Index", "Brigadiers")</li>
+                                <li>@Html.ActionLink("Drivers", "Index", "Drivers")</li>
+                                <li>@Html.ActionLink("Masters", "Index", "Masters")</li>
+                                <li>@Html.ActionLink("ServiceWorkers", "Index", "ServiceWorkers")</li>
+                                <li>@Html.ActionLink("WorkshopManagers", "Index", "WorkshopManagers")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Requests
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("1: Get data on the fleet of the enterprise", "Index", "Home")</li>
+                                <li>@Html.ActionLink("2: Get a list and the total number of drivers", "Request2", "Requests")</li>
+                                <li>@Html.ActionLink("3: Get distribution of the drivers in the cars", "Index", "Home")</li>
+                                <li>@Html.ActionLink("4: Get data on the distribution of passenger vehicles by route", "Request4", "Requests")</li>
+                                <li>@Html.ActionLink("5: Get information about vehicle mileage", "Index", "Home")</li>
+                                <li>@Html.ActionLink("6: Get data about the number of repairs and their cost", "Index", "Home")</li>
+                                <li>@Html.ActionLink("7: Obtain data on the command staff", "Index", "Home")</li>
+                                <li>@Html.ActionLink("8: Get information about the presence of a garages", "Index", "Home")</li>
+                                <li>@Html.ActionLink("9: Get data about the distribution of vehicles", "Index", "Home")</li>
+                                <li>@Html.ActionLink("10: Get information about freight transportation", "Request10", "Requests")</li>
+                                <li>@Html.ActionLink("11: Get data on the number of units used for repairs", "Index", "Home")</li>
+                                <li>@Html.ActionLink("12: Get information about received and decommissioned vehicles", "Request12", "Requests")</li>
+                                <li>@Html.ActionLink("13: Get the list of subordinates of the specified brigadier", "Request13", "Requests")</li>
+                                <li>@Html.ActionLink("14: Get data about works", "Request14", "Requests")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")|| User.IsInRole("HR"))
+                    {
+                        <li>@Html.ActionLink("Manual request", "Index", "ManualRequest")</li>
+                    }
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />*@
+        @*<footer>
+            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+        </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

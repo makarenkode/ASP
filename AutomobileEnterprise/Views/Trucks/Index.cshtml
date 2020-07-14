@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<AutomobileEnterprise.Models.Cars.Truck>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CarringCapacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Mileage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().PurchaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().WriteOffDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Cat)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarringCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WriteOffDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cat)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, PageNum =>Url.Action("Index",
+    new { PageNum }))

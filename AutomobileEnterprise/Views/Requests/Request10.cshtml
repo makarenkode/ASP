@@ -1,0 +1,82 @@
+﻿
+@model AutomobileEnterprise.Controllers.RequestsController.Req10vm
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Request 10";
+}
+
+@using (Html.BeginForm()) {
+<h4 style="color:black">Get information about freight transportation</h4>
+
+
+<form method="get">
+    <div class="form-inline">
+        @Html.Label("Car:", new { @class = "control-label col-md-2" })
+        <div style="position:fixed; left:17% " ;class="col-md-10">
+            @Html.DropDownListFor(model => model.CarId, Model.Cars as SelectList,
+             htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Begin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Begin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Begin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Show" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Departures.First().CarId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Departures.First().Date)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Departures)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+        </tr>
+    }
+</table>
+
+Page @(Model.Departures.PageCount < Model.Departures.PageNumber ? 0 : Model.Departures.PageNumber) of @Model.Departures.PageCount
+@Html.PagedListPager(Model.Departures, PageNum =>Url.Action("Request10",
+    new
+    {
+        carId = Model.CarId,
+        begin =  Model.Begin,
+        end = Model.End,
+        pageNum = PageNum,
+    }))
+
+
+
+
+
+
